@@ -36,16 +36,24 @@ const App2 = () => {
 
 const HomeScreen = ({navigation}) => {
   return (
-    <Button
-      title="Go to Jane's profile"
-      onPress={() =>
-        navigation.navigate('Profile', {name: 'Jane'})
-      }
-    />
+    <View>
+      <Text style={{fontSize:50,}}>
+        Ini halaman home
+      </Text>
+      <Button
+        title="Profile"
+        onPress={() =>
+          navigation.navigate('Profile', {name: 'Erfian', id: '123'})
+        }
+      />
+    </View>
   );
 };
+
 const ProfileScreen = ({navigation, route}) => {
-  return <Text>This is {route.params.name}'s profile</Text>;
+  return <Text style={{fontSize:50,}}>
+    This is {route.params.name}'s profile ID: {route.params.id}
+    </Text>;
 };
 
 const Stack = createNativeStackNavigator();
@@ -59,9 +67,13 @@ const App = () => {
           component={HomeScreen}
           options={{title: 'Welcome'}}
         />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen 
+          name="Profile" 
+          component={ProfileScreen} 
+          options={{title: 'Halaman Profile'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-export default App1;
+export default App;
