@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, Button} from 'react-native';
-import Halaman1 from './src/Halaman1';
+import Home from './src/Home';
 import Halaman2 from './src/Halaman2';
 import Layout from './src/Layout';
 import FlexBasic from './src/FlexBasic';
@@ -13,7 +13,7 @@ const App1 = () => {
   return(
     <View>
       <Text style={{fontSize:50}}>Hello ARS</Text>
-      <Halaman1 nama_depan="Erfian" nama_belakang="Junianto"/>
+      {/* <Halaman1 nama_depan="Erfian" nama_belakang="Junianto"/> */}
       <Text style={{fontSize:30}}>You clicked {count} times</Text>
       <Button
         onPress={() => setCount(count + 1)}
@@ -64,7 +64,7 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
-          component={HomeScreen}
+          component={Home}
           options={{title: 'Welcome'}}
         />
         <Stack.Screen 
