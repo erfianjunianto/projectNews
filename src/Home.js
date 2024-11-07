@@ -2,21 +2,22 @@ import React, {useEffect, useState} from 'react';
 import { GluestackUIStyledProvider, Button, ButtonText } from '@gluestack-ui/themed';
 import { config } from '@gluestack-ui/config';
 import { GluestackUIProvider, Alert, FlatList, AlertText, Card, Image, Text, Heading, Link, HStack, LinkText, } from '@gluestack-ui/themed';
+import {ActivityIndicator} from 'react-native';
 
 
-
-const Headline = () =>{
+const Berita = () =>{
+    const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
     const getMovies = async () => {
         try {
-        const response = await fetch('https://newsapi.org/v2/everything?q=bitcoin&pageSize=10&apiKey=6d4b261c262e4a51a4408f2e839d5530');
+        const response = await fetch('https://newsapi.org/v2/everything?q=sports&pageSize=5&apiKey=6d4b261c262e4a51a4408f2e839d5530');
         const json = await response.json();
         setData(json.articles);
         } catch (error) {
         console.error(error);
         } finally {
-        // setLoading(false);
+        setLoading(false);
         }
     };
 
@@ -25,66 +26,72 @@ const Headline = () =>{
     }, []);
     
     return (
-        <FlatList
-            data={data}
-            renderItem={({ item }) => (
-            <Card p="$5" borderRadius="$lg" m="$3">
-                <Image
-                mb="$6"
-                h={240}
-                width="$full"
-                borderRadius="$md"
-                source={{
-                uri: 'https://media.wired.com/photos/6703eb3979f13fda7f04485b/191:100/w_1280,c_limit/Satoshi-Nakamoto-biz-1341874258.jpg',
-                }}
-            />
-            <Text
-                fontSize="$sm"
-                fontStyle="normal"
-                fontFamily="$heading"
-                fontWeight="$normal"
-                lineHeight="$sm"
-                mb="$2"
-                sx={{
-                color: '$textLight700',
-                _dark: {
-                    color: '$textDark200',
-                },
-                }}
-            >
-                {item.publishedAt}
-            </Text>
-            <Heading size="md" fontFamily="$heading" mb="$4">
-                {item.title}
-            </Heading>
-            <Link href={item.url} isExternal>
-                <HStack alignItems="center">
-                <LinkText
-                    size="sm"
+        <>
+        {isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <FlatList
+                data={data}
+                renderItem={({ item }) => (
+                <Card p="$5" borderRadius="$lg" m="$3">
+                    <Image
+                    mb="$6"
+                    h={240}
+                    width="$full"
+                    borderRadius="$md"
+                    alt="image"
+                    source={{
+                    uri:'' + item.urlToImage+'',
+                    }}
+                />
+                <Text
+                    fontSize="$sm"
+                    fontStyle="normal"
                     fontFamily="$heading"
-                    fontWeight="$semibold"
-                    color="$primary600"
-                    $dark-color="$primary300"
-                    textDecorationLine="none"
+                    fontWeight="$normal"
+                    lineHeight="$sm"
+                    mb="$2"
+                    sx={{
+                    color: '$textLight700',
+                    _dark: {
+                        color: '$textDark200',
+                    },
+                    }}
                 >
-                    Read Blog
-                </LinkText>
-                {/* <Icon
-                    as={ArrowRightIcon}
-                    size="sm"
-                    color="$primary600"
-                    mt="$0.5"
-                    ml="$0.5"
-                    $dark-color="$primary300"
-                /> */}
-                </HStack>
-            </Link>
-            </Card>
+                    {item.publishedAt}
+                </Text>
+                <Heading size="md" fontFamily="$heading" mb="$4">
+                    {item.title}
+                </Heading>
+                <Link href={item.url} isExternal>
+                    <HStack alignItems="center">
+                    <LinkText
+                        size="sm"
+                        fontFamily="$heading"
+                        fontWeight="$semibold"
+                        color="$primary600"
+                        $dark-color="$primary300"
+                        textDecorationLine="none"
+                    >
+                        Read Blog
+                    </LinkText>
+                    {/* <Icon
+                        as={ArrowRightIcon}
+                        size="sm"
+                        color="$primary600"
+                        mt="$0.5"
+                        ml="$0.5"
+                        $dark-color="$primary300"
+                    /> */}
+                    </HStack>
+                </Link>
+                </Card>
+            )}
+            // keyExtractor={(item) => item.id}
+        />
         )}
-        // keyExtractor={(item) => item.id}
-      />
-);
-}
+    </>
+);}
 
 const Home = () => {
   return (
@@ -100,7 +107,7 @@ const Home = () => {
                 using our service.
             </AlertText>
         </Alert>
-        <Headline />
+        <Berita />
     </GluestackUIProvider>
   )
 }
